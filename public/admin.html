@@ -37,14 +37,14 @@
     <div class="refresh-bar">
       <h2>Kitchen Dashboard</h2>
       <button onclick="loadOrders()">Refresh</button>
+      <button onclick="enableAudio()" style="margin-left: 10px; background: #ff9800; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer;">🔔 Enable Sound
+      </button>
     </div>
     <div id="orders-list">Loading orders…</div>
   </div>
 
   <script>
-    <button onclick="enableAudio()" style="margin: 15px; padding: 10px 20px; background: #ff9800; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; font-size: 16px;">
-  🔔 Enable Sound Alerts
-</button>
+    
     async function loadOrders() {
       const el = document.getElementById("orders-list");
       try {
