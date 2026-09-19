@@ -58,3 +58,13 @@ router.put("/:id/availability", (req, res) => {
 });
 
 module.exports = router;
+router.post("/toggle-stock", (req, res) => {
+    const { id, available } = req.body;
+    try {
+        const stmt = db.prepare("UPDATE menu_items SET available = ? WHERE id = ?");
+        stmt.run(available, id);
+        res.json({ success: true, message: "Stock status updated" });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});

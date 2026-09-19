@@ -106,6 +106,33 @@ async function updateOrderStatus(orderId, newStatus) {
     console.error('Error updating status:', err);
   }
 }
+const alertSound = new Audio('https://actions.google.com/sounds/v1/alarms/beep_short.ogg');
+let lastOrderCount = 0;
+
+function checkOrders() {
+    fetch('/api/orders')
+        .then(res => res.json())
+        .then(orders => {
+            // Jo nawa orders aavya hoy to sound play karo
+            if (orders.length > lastOrderCount && lastOrderCount !== 0) {
+                alertSound.play().catch(e => console.log("Audio play error:", e));
+            }
+            lastOrderCount = orders.length;
+        });
+}
+setInterval(checkOrders, 5000);
+function toggleStock(itemId, currentStatus) {
+    const newStatus = currentStatus === 1 ? 0 : 1;
+    fetch('/api/menu/toggle-stock', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: itemId, available: newStatus })
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.success) location.reload();
+    });
+}
 </script>
 </body>
 </html>

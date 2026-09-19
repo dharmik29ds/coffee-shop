@@ -11,7 +11,7 @@
 const QRCode = require("qrcode");
 const path = require("path");
 
-const TARGET_URL = process.env.ORDER_URL || "https://clamp-setting-duke.ngrok-free.dev/order";
+const TARGET_URL = process.env.TARGET_URL || "https://coffee-shop-alh8.onrender.com/order";
 const OUTPUT_PATH = path.join(__dirname, "public", "qr-code.png");
 
 QRCode.toFile(
