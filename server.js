@@ -4,6 +4,8 @@ const cors = require("cors");
 const path = require("path");
 const session = require("express-session");
 
+const app = express(); // આ લાઈન 'app.use(session(...))' ની ઉપર હોવી જોઈએ!
+
 // Session Setup
 app.use(session({
     secret: 'coffee-shop-super-secret-key',
@@ -11,12 +13,10 @@ app.use(session({
     saveUninitialized: false,
     cookie: { maxAge: 24 * 60 * 60 * 1000 }
 }));
-require("./database"); // ensures DB + tables + seed data exist before routes load
-
 const menuRoutes = require("./routes/menu");
 const orderRoutes = require("./routes/orders");
 
-const app = express();
+
 const PORT = process.env.PORT || 3000;
 
 app.use(cors());
