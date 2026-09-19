@@ -106,9 +106,15 @@ async function updateOrderStatus(orderId, newStatus) {
     console.error('Error updating status:', err);
   }
 }
-const alertSound = new Audio('https://actions.google.com/sounds/v1/alarms/beep_short.ogg');
-let lastOrderCount = 0;
-
+// User click કરે ત્યારે sound enable કરવા માટે
+function enableAudio() {
+    alertSound.play().then(() => {
+        alertSound.pause();
+        alertSound.currentTime = 0;
+        audioEnabled = true;
+        alert("Sound Alerts Enabled!");
+    }).catch(e => console.log("Audio unlock error:", e));
+}
 function checkOrders() {
     fetch('/api/orders')
         .then(res => res.json())
@@ -133,6 +139,50 @@ function toggleStock(itemId, currentStatus) {
         if (data.success) location.reload();
     });
 }
+    const alertSound = new Audio('https://actions.google.com/sounds/v1/alarms/beep_short.ogg');
+    let audioEnabled = false;
+    let lastOrderCount = 0;
+
+    // User click કરે ત્યારે sound enable કરવા માટે
+    function enableAudio() {
+        alertSound.play().then(() => {
+            alertSound.pause();
+            alertSound.currentTime = 0;
+            audioEnabled = true;
+            alert("Sound Alerts Enabled!");
+        }).catch(e => console.log("Audio unlock error:", e));
+    }
+
+    function checkOrders() {
+        fetch('/api/orders')
+            .then(res => res.json())
+            .then(orders => {
+                if (orders.length > lastOrderCount && lastOrderCount !== 0) {
+                    if (audioEnabled) {
+                        alertSound.play().catch(e => console.log("Audio play error:", e));
+                    }
+                }
+                lastOrderCount = orders.length;
+            })
+            .catch(err => console.error("Error fetching orders:", err));
+    }
+
+    setInterval(checkOrders, 5000);
+
+    // Stock toggle function
+    function toggleStock(itemId, currentStatus) {
+        const newStatus = currentStatus === 1 ? 0 : 1;
+        fetch('/api/menu/toggle-stock', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ id: itemId, available: newStatus })
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) location.reload();
+        })
+        .catch(err => console.error("Error toggling stock:", err));
+    }
 </script>
 </body>
 </html>
