@@ -1,0 +1,20 @@
+{
+  "name": "coffee-shop-website",
+  "version": "1.0.0",
+  "description": "Coffee shop website with QR code table ordering and SQLite database",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js",
+    "generate-qr": "node generate-qr.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "better-sqlite3": "^11.3.0",
+    "cors": "^2.8.5",
+    "qrcode": "^1.5.4"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.4"
+  }
+}

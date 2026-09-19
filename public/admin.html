@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Kitchen Dashboard · Daybreak Coffee Co.</title>
+<link rel="stylesheet" href="/css/style.css" />
+<style>
+  .board { max-width: 1000px; margin: 0 auto; padding: 1.5rem; }
+  .order-card {
+    background: #fff; border-radius: var(--radius); box-shadow: var(--shadow);
+    padding: 1rem 1.25rem; margin-bottom: 1rem; border-left: 6px solid var(--coffee-mid);
+  }
+  .order-card.pending { border-left-color: #e53935; }
+  .order-card.preparing { border-left-color: #fb8c00; }
+  .order-card.ready { border-left-color: #4caf50; }
+  .order-card.completed { border-left-color: #9e9e9e; opacity: 0.6; }
+  .order-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; }
+  .order-head h3 { font-size: 1.05rem; }
+  .order-head .meta { font-size: 0.85rem; color: #7a6a60; }
+  .order-items { font-size: 0.92rem; margin-bottom: 0.75rem; }
+  .order-items div { padding: 0.15rem 0; }
+  .status-select { padding: 0.4rem 0.75rem; border-radius: 8px; border: 1px solid #d9c9ba; font-weight: 600; }
+  .refresh-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
+  .refresh-bar button { background: var(--coffee-mid); color: #fff; border: none; padding: 0.6rem 1.2rem;
+    border-radius: 8px; cursor: pointer; font-weight: 600; }
+</style>
+</head>
+<body>
+
+  <header class="navbar">
+    <div class="logo">Daybreak <span>Coffee Co.</span></div>
+    <nav><a href="/">Home</a></nav>
+  </header>
+
+  <div class="board">
+    <div class="refresh-bar">
+      <h2>Kitchen Dashboard</h2>
+      <button onclick="loadOrders()">Refresh</button>
+    </div>
+    <div id="orders-list">Loading orders…</div>
+  </div>
+
+  <script>
+    async function loadOrders() {
+      const el = document.getElementById("orders-list");
+      try {
+        const res = await fetch("/api/orders");
+        const orders = await res.json();
+
+        if (orders.length === 0) {
+          el.innerHTML = "<p>No orders yet.</p>";
+          return;
+        }
+
+        el.innerHTML = orders
+          .map((o) => `
+          <div class="order-card ${o.status}">
+            <div class="order-head">
+              <h3>Order #${o.id} — Table ${o.table_number || "N/A"}</h3>
+              <div class="meta">${new Date(o.created_at).toLocaleString()}</div>
+            </div>
+            <div class="meta" style="margin-bottom:0.5rem;">Customer: ${o.customer_name || "Guest"}</div>
+            <div class="order-items">
+              ${o.items.map((it) => `<div>${it.quantity} × ${it.name} — $${(it.price_at_order * it.quantity).toFixed(2)}${it.notes ? ` (${it.notes})` : ""}</div>`).join("")}
+            </div>
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <strong>Total: $${o.total.toFixed(2)}</strong>
+              <select class="status-select" onchange="updateStatus(${o.id}, this.value)">
+                ${["pending","preparing","ready","completed","cancelled"]
+                  .map((s) => `<option value="${s}" ${s === o.status ? "selected" : ""}>${s}</option>`)
+                  .join("")}
+              </select>
+            </div>
+          </div>
+        `)
+          .join("");
+      } catch (err) {
+        el.innerHTML = "<p>Could not load orders.</p>";
+        console.error(err);
+      }
+    }
+
+    async function updateStatus(orderId, status) {
+      await fetch(`/api/orders/${orderId}/status`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ status })
+      });
+      loadOrders();
+    }
+
+    loadOrders();
+    setInterval(loadOrders, 15000); // auto-refresh every 15s
+async function updateOrderStatus(orderId, newStatus) {
+  try {
+    const res = await fetch('/api/orders/${orderId}/status',{
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ status: newStatus })
+    });
+    if (res.ok) {
+      console.log('Status updated successfully');
+    }
+  } catch (err) {
+    console.error('Error updating status:', err);
+  }
+}
+</script>
+</body>
+</html>

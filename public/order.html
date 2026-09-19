@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Order · Daybreak Coffee Co.</title>
+<link rel="stylesheet" href="/css/style.css" />
+<style>
+  .order-wrap { max-width: 720px; margin: 0 auto; padding: 1.5rem; padding-bottom: 8rem; }
+  .customer-info {
+    display: flex; gap: 1rem; margin-bottom: 1.5rem; flex-wrap: wrap;
+  }
+  .customer-info input {
+    flex: 1; min-width: 140px; padding: 0.75rem 1rem; border-radius: 10px;
+    border: 1px solid #d9c9ba; font-size: 1rem;
+  }
+  .category-tabs { display: flex; gap: 0.5rem; overflow-x: auto; margin-bottom: 1.5rem; padding-bottom: 0.25rem; }
+  .category-tabs button {
+    white-space: nowrap; padding: 0.5rem 1rem; border-radius: 999px; border: 1px solid var(--coffee-mid);
+    background: #fff; color: var(--coffee-mid); font-weight: 600; cursor: pointer;
+  }
+  .category-tabs button.active { background: var(--coffee-mid); color: #fff; }
+  .item-row {
+    display: flex; gap: 1rem; align-items: center; background: #fff; border-radius: var(--radius);
+    padding: 0.85rem; margin-bottom: 0.85rem; box-shadow: var(--shadow);
+  }
+  .item-row img { width: 72px; height: 72px; border-radius: 10px; object-fit: cover; flex-shrink: 0; }
+  .item-row .item-info { flex: 1; }
+  .item-row .item-info h3 { font-size: 1rem; }
+  .item-row .item-info p { font-size: 0.85rem; color: #7a6a60; }
+  .item-row .price { font-weight: 700; color: var(--coffee-mid); margin-bottom: 0.35rem; }
+  .qty-control { display: flex; align-items: center; gap: 0.5rem; }
+  .qty-control button {
+    width: 30px; height: 30px; border-radius: 50%; border: 1px solid var(--coffee-mid);
+    background: #fff; color: var(--coffee-mid); font-size: 1.1rem; cursor: pointer; line-height: 1;
+  }
+  .qty-control span { min-width: 20px; text-align: center; font-weight: 600; }
+
+  .cart-bar {
+    position: fixed; bottom: 0; left: 0; right: 0; background: var(--coffee-dark); color: #fff;
+    padding: 1rem 1.5rem; display: flex; align-items: center; justify-content: space-between;
+    box-shadow: 0 -4px 16px rgba(0,0,0,0.2);
+  }
+  .cart-bar .total { font-weight: 700; font-size: 1.1rem; }
+  .cart-bar button { background: var(--accent); color: var(--coffee-dark); border: none; padding: 0.75rem 1.5rem;
+    border-radius: 999px; font-weight: 700; cursor: pointer; }
+  .cart-bar button:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  .toast {
+    position: fixed; top: 1rem; left: 50%; transform: translateX(-50%);
+    background: var(--success); color: #fff; padding: 0.85rem 1.5rem; border-radius: 10px;
+    font-weight: 600; box-shadow: var(--shadow); display: none; z-index: 100;
+  }
+  .toast.error { background: var(--danger); }
+</style>
+</head>
+<body>
+
+  <header class="navbar">
+    <div class="logo">Daybreak <span>Coffee Co.</span></div>
+    <nav><a href="/">Home</a></nav>
+  </header>
+
+  <div id="toast" class="toast"></div>
+
+  <div class="order-wrap">
+    <h2 style="margin: 1.5rem 0 1rem;">Place Your Order</h2>
+
+    <div class="customer-info">
+      <input type="text" id="table-number" placeholder="Table number" />
+      <input type="text" id="customer-name" placeholder="Your name (optional)" />
+      <div id="order-status-box" style="margin: 20px 0; padding: 15px 20px; background: #fff3cd; border: 1px solid #ffeeba; border-radius: 8px; text-align: center; display: none;">
+  <h3 style="margin: 0; color: #856404; font-size: 1.2rem;">
+    Your Order Status: <span id="current-status" style="color: #d97706; font-weight: bold; text-transform: uppercase;">PENDING</span>
+  </h3>
+  <p style="margin: 5px 0 0 0; font-size: 0.9rem; color: #6c757d;">
+    This updates automatically when the kitchen updates your order!
+  </p>
+</div>
+    </div>
+
+    <div class="category-tabs" id="category-tabs"></div>
+
+    <div id="menu-list">Loading menu…</div>
+  </div>
+
+  <div class="cart-bar">
+    <div class="total">Total: $<span id="cart-total">0.00</span></div>
+    <button id="submit-order" disabled>Place Order</button>
+  </div>
+  <script src="/js/order.js"></script>
+</body>
+</html>
