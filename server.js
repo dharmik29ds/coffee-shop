@@ -26,13 +26,12 @@ app.use("/api/orders", orderRoutes);
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "index.html"));
 });
+app.get("/order", (req, res) => {
+    res.sendFile(path.join(__dirname, "public", "order.html"));
+});
 
 app.get("/kitchen-secret-99", (req, res) => {
     res.sendFile(path.join(__dirname, "public", "admin.html"));
-});
-
-app.get("/admin", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "admin.html"));
 });
 
 app.listen(PORT, () => {
