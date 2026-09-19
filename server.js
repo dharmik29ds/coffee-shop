@@ -2,7 +2,15 @@
 const express = require("express");
 const cors = require("cors");
 const path = require("path");
+const session = require("express-session");
 
+// Session Setup
+app.use(session({
+    secret: 'coffee-shop-super-secret-key',
+    resave: false,
+    saveUninitialized: false,
+    cookie: { maxAge: 24 * 60 * 60 * 1000 }
+}));
 require("./database"); // ensures DB + tables + seed data exist before routes load
 
 const menuRoutes = require("./routes/menu");
@@ -30,7 +38,26 @@ app.get("/order", (req, res) => {
     res.sendFile(path.join(__dirname, "public", "order.html"));
 });
 
-app.get("/kitchen-secret-99", (req, res) => {
+// Login API
+app.post('/api/login', (req, res) => {
+    const { username, password } = req.body;
+    if (username === 'admin' && password === 'kitchen123') {
+        req.session.isLoggedIn = true;
+        return res.status(200).send({ success: true });
+    }
+    res.status(401).send({ success: false });
+});
+
+// Authentication Middleware
+const requireAuth = (req, res, next) => {
+    if (req.session && req.session.isLoggedIn) {
+        return next();
+    }
+    res.sendFile(path.join(__dirname, "public", "login.html"));
+};
+
+// Protected Kitchen Dashboard Route
+app.get("/kitchen-dashboard", requireAuth, (req, res) => {
     res.sendFile(path.join(__dirname, "public", "admin.html"));
 });
 

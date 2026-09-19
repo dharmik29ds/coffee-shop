@@ -9,9 +9,10 @@
     "generate-qr": "node generate-qr.js"
   },
   "dependencies": {
-    "express": "^4.19.2",
     "better-sqlite3": "^11.3.0",
     "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "express-session": "^1.19.0",
     "qrcode": "^1.5.4"
   },
   "devDependencies": {
