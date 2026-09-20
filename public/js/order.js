@@ -168,3 +168,21 @@ function startTrackingOrder(orderId) {
     }
   }, 3000);
 }
+// Category Filter Function
+function filterMenu(category) {
+    // Active button style change કરવા માટે
+    const buttons = document.querySelectorAll('.category-tabs .tab-btn');
+    buttons.forEach(btn => btn.classList.remove('active'));
+    event.target.classList.add('active');
+
+    // Menu items ને ફિલ્ટર કરવા માટે
+    const items = document.querySelectorAll('.menu-item, .menu-card'); 
+    items.forEach(item => {
+        const itemCategory = item.getAttribute('data-category');
+        if (category === 'all' || itemCategory === category) {
+            item.style.display = 'block';
+        } else {
+            item.style.display = 'none';
+        }
+    });
+}
