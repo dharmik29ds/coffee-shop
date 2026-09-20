@@ -49,35 +49,32 @@ function renderCategoryTabs() {
     });
   });
 }
-
 function renderMenu() {
-  const filtered =
-    activeCategory === "All"
-      ? menuItems
-      : menuItems.filter((i) => i.category === activeCategory);
+    const filtered =
+        activeCategory === "All"
+            ? menuItems
+            : menuItems.filter((i) => i.category === activeCategory);
 
-  menuListEl.innerHTML = filtered
-    .map((item) => {
-      const qty = cart[item.id] || 0;
-      return `
-      <div class="item-row">
-        <img src="${item.image_url}" alt="${item.name}" />
-        <div class="item-info">
-          <h3>${item.name}</h3>
-          <p>${item.description || ""}</p>
-        </div>
-        <div>
-          <div class="price">$${item.price.toFixed(2)}</div>
-          <div class="qty-control">
-            <button onclick="changeQty(${item.id}, -1)">−</button>
-            <span id="qty-${item.id}">${qty}</span>
-            <button onclick="changeQty(${item.id}, 1)">+</button>
-          </div>
-        </div>
-      </div>
-    `;
-    })
-    .join("");
+    menuListEl.innerHTML = filtered
+        .map((item) => {
+            const qty = cart[item.id] || 0;
+            return `
+                <div class="item-row" data-category="${item.category}">
+                    <img src="${item.image_url}" alt="${item.name}" />
+                    <div class="item-info">
+                        <h3>${item.name}</h3>
+                        <p>${item.description || ""}</p>
+                        <div class="price">$${item.price.toFixed(2)}</div>
+                    </div>
+                    <div class="qty-control">
+                        <button onclick="changeQty(${item.id}, -1)">-</button>
+                        <span id="qty-${item.id}">${qty}</span>
+                        <button onclick="changeQty(${item.id}, 1)">+</button>
+                    </div>
+                </div>
+            `;
+        })
+        .join("");
 }
 
 function changeQty(itemId, delta) {
