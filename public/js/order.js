@@ -175,11 +175,13 @@ function filterMenu(category) {
         event.currentTarget.classList.add('active');
     }
 
-    // Menu items ને ફિલ્ટર કરવા માટે (.item-row વાપરો)
+    // Menu items ને ફિલ્ટર કરવા માટે
     const items = document.querySelectorAll('.item-row');
     items.forEach(item => {
         const itemCategory = (item.getAttribute('data-category') || '').toLowerCase().trim();
         const targetCategory = category.toLowerCase().trim();
+
+        console.log("Card Category:", itemCategory, "| Clicked Category:", targetCategory);
 
         if (targetCategory === 'all' || itemCategory === targetCategory) {
             item.style.display = 'flex';
@@ -188,3 +190,4 @@ function filterMenu(category) {
         }
     });
 }
+  
