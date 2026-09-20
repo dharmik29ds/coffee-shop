@@ -4,9 +4,7 @@ const cors = require("cors");
 const path = require("path");
 const session = require("express-session");
 
-const app = express(); // આ લાઈન 'app.use(session(...))' ની ઉપર હોવી જોઈએ!
-
-// Session Setup
+const app = express(); 
 app.use(session({
     secret: 'coffee-shop-super-secret-key',
     resave: false,
