@@ -224,41 +224,6 @@ footer {
     font-size: 0.95rem;
     border-top: 1px solid rgba(255, 255, 255, 0.05);
 }
-/* Category Filter Tabs Styling - Permanent Fix */
 .category-tabs {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin: 20px 0 30px 0;
-    flex-wrap: wrap;
-    position: relative;
-    z-index: 10;
-}
-
-.category-tabs .tab-btn {
-    background: rgba(40, 30, 20, 0.85) !important;
-    border: 1px solid rgba(212, 163, 115, 0.5) !important;
-    color: #ffffff !important;
-    padding: 10px 20px;
-    border-radius: 25px;
-    cursor: pointer;
-    font-size: 14px;
-    font-weight: 500;
-    transition: all 0.3s ease;
-    backdrop-filter: blur(10px);
-    opacity: 1 !important;
-    visibility: visible !important;
-}
-
-.category-tabs .tab-btn:hover {
-    background: #d4a373 !important;
-    border-color: #d4a373 !important;
-    color: #ffffff !important;
-}
-
-.category-tabs .tab-btn.active {
-    background: #d4a373 !important;
-    color: #ffffff !important;
-    border-color: #d4a373 !important;
-    box-shadow: 0 4px 15px rgba(212, 163, 115, 0.5);
+    display: none !important;
 }

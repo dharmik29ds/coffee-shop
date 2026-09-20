@@ -165,9 +165,8 @@ function startTrackingOrder(orderId) {
     }
   }, 3000);
 }
-// Category Filter Function
 function filterMenu(category) {
-    // Active button style change કરવા માટે
+    // 1. Active button style change કરવા માટે
     const buttons = document.querySelectorAll('.category-tabs .tab-btn');
     buttons.forEach(btn => btn.classList.remove('active'));
     
@@ -175,19 +174,20 @@ function filterMenu(category) {
         event.currentTarget.classList.add('active');
     }
 
-    // Menu items ને ફિલ્ટર કરવા માટે
+    // 2. Direct clean filtering logic
     const items = document.querySelectorAll('.item-row');
     items.forEach(item => {
         const itemCategory = (item.getAttribute('data-category') || '').toLowerCase().trim();
         const targetCategory = category.toLowerCase().trim();
 
-        console.log("Card Category:", itemCategory, "| Clicked Category:", targetCategory);
-
         if (targetCategory === 'all' || itemCategory === targetCategory) {
-            item.style.display = 'flex';
+            item.style.setProperty('display', 'flex', 'important');
         } else {
-            item.style.display = 'none';
+            item.style.setProperty('display', 'none', 'important');
         }
     });
 }
-  
+
+
+
+    
