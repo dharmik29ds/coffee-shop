@@ -187,6 +187,30 @@ function filterMenu(category) {
         }
     });
 }
+// Slide-over Cart Drawer Logic
+const cartDrawer = document.getElementById('cartDrawer');
+const cartOverlay = document.getElementById('cartOverlay');
+const closeCart = document.getElementById('closeCart');
+
+// Cart Drawer Open કરવા માટેનું ફંક્શન
+function openCartDrawer() {
+    if (cartDrawer) cartDrawer.classList.add('open');
+    if (cartOverlay) cartOverlay.classList.add('active');
+}
+
+// Cart Drawer Close કરવા માટેનું ફંક્શન
+function closeCartDrawer() {
+    if (cartDrawer) cartDrawer.classList.remove('open');
+    if (cartOverlay) cartOverlay.classList.remove('active');
+}
+
+// Close બટન કે Overlay પર ક્લિક કરવાથી બંધ થઈ જાય
+if (closeCart) {
+    closeCart.addEventListener('click', closeCartDrawer);
+}
+if (cartOverlay) {
+    cartOverlay.addEventListener('click', closeCartDrawer);
+}
 
 
 

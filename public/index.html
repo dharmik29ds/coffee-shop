@@ -47,5 +47,24 @@
   </footer>
 
   <script src="/js/main.js"></script>
+  <!-- Slide-over Cart Drawer -->
+<div id="cartDrawer" class="cart-drawer">
+    <div class="cart-header">
+        <h3>Taru Cart</h3>
+        <button id="closeCart" class="close-btn">&times;</button>
+    </div>
+    <div class="cart-items-container">
+        <!-- Add thayele items aya list thase -->
+        <p class="empty-cart-msg">Taru cart khali che.</p>
+    </div>
+    <div class="cart-footer">
+        <div class="cart-total">
+            <span>Total:</span>
+            <span id="cartTotalPrice">₹0</span>
+        </div>
+        <button id="checkoutBtn" class="checkout-btn">Checkout Karo</button>
+    </div>
+</div>
+<div id="cartOverlay" class="cart-overlay"></div>
 </body>
 </html>
