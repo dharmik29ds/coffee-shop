@@ -170,14 +170,19 @@ function filterMenu(category) {
     // Active button style change કરવા માટે
     const buttons = document.querySelectorAll('.category-tabs .tab-btn');
     buttons.forEach(btn => btn.classList.remove('active'));
-    event.target.classList.add('active');
+    
+    if (event && event.currentTarget) {
+        event.currentTarget.classList.add('active');
+    }
 
-    // Menu items ને ફિલ્ટર કરવા માટે
-    const items = document.querySelectorAll('.menu-item, .menu-card'); 
+    // Menu items ને ફિલ્ટર કરવા માટે (.item-row વાપરો)
+    const items = document.querySelectorAll('.item-row');
     items.forEach(item => {
-        const itemCategory = item.getAttribute('data-category');
-        if (category === 'all' || itemCategory === category) {
-            item.style.display = 'block';
+        const itemCategory = (item.getAttribute('data-category') || '').toLowerCase().trim();
+        const targetCategory = category.toLowerCase().trim();
+
+        if (targetCategory === 'all' || itemCategory === targetCategory) {
+            item.style.display = 'flex';
         } else {
             item.style.display = 'none';
         }
