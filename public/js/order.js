@@ -215,6 +215,14 @@ if (cartOverlay) {
 if (openCartTrigger) {
     openCartTrigger.addEventListener('click', openCartDrawer);
 }
+// ઓર્ડર પેજ પર રહેલા 'Place Order' કે કાર્ટ બટન સાથે ડ્રોઅર લિંક કરવા માટે
+const placeOrderBtn = document.querySelector('.place-order-btn'); 
+if (placeOrderBtn) {
+    placeOrderBtn.addEventListener('click', function(e) {
+        // જો તારે ઓર્ડર પ્લેસ કરતી વખતે જ ડ્રોઅર ખોલવું હોય તો અહીં ફંક્શન કોલ કરી શકાય
+        openCartDrawer();
+    });
+}
 
 
 
