@@ -211,7 +211,7 @@ if (closeCart) {
 if (cartOverlay) {
     cartOverlay.addEventListener('click', closeCartDrawer);
 }
-   const openCartTrigger = document.querySelector('.place-order-btn'); // અથવા તારું કાર્ટ બટન હોય તો એની ક્લાસ
+    const openCartTrigger = document.querySelector('.place-order-btn'); // અથવા તારું કાર્ટ બટન હોય તો એની ક્લાસ
 if (openCartTrigger) {
     openCartTrigger.addEventListener('click', openCartDrawer);
 }
