@@ -224,7 +224,7 @@ footer {
     font-size: 0.95rem;
     border-top: 1px solid rgba(255, 255, 255, 0.05);
 }
-/* Category Filter Tabs Styling */
+/* Category Filter Tabs Styling - Fixed */
 .category-tabs {
     display: flex;
     justify-content: center;
@@ -234,21 +234,26 @@ footer {
 }
 
 .category-tabs .tab-btn {
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    color: #fff;
-    padding: 8px 18px;
-    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: #ffffff !important;
+    padding: 10px 20px;
+    border-radius: 25px;
     cursor: pointer;
     font-size: 14px;
+    font-weight: 500;
     transition: all 0.3s ease;
     backdrop-filter: blur(10px);
 }
 
-.category-tabs .tab-btn:hover,
-.category-tabs .tab-btn.active {
-    background: #d4a373;
-    color: #fff;
+.category-tabs .tab-btn:hover {
+    background: rgba(212, 163, 115, 0.4);
     border-color: #d4a373;
-    box-shadow: 0 4px 15px rgba(212, 163, 115, 0.4);
+}
+
+.category-tabs .tab-btn.active {
+    background: #d4a373 !important;
+    color: #ffffff !important;
+    border-color: #d4a373 !important;
+    box-shadow: 0 4px 15px rgba(212, 163, 115, 0.5);
 }
