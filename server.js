@@ -58,7 +58,6 @@ const requireAuth = (req, res, next) => {
 app.get("/kitchen-dashboard", requireAuth, (req, res) => {
     res.sendFile(path.join(__dirname, "public", "admin.html"));
 });
-
 app.listen(PORT, () => {
-    console.log(Server is running on port ${PORT});
+    console.log(`Server is running on port `+PORT);
 });
