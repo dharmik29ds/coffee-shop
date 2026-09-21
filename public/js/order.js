@@ -3,6 +3,16 @@
 // manages a cart in memory, and submits the order to /api/orders
 // which writes it into the SQLite database.
 
+let menuItems = [];
+let cart = {}; // { menu_item_id: quantity }
+let activeCategory = "All";
+
+const menuListEl = document.getElementById("menu-list");
+const tabsEl = document.getElementById("category-tabs");
+const totalEl = document.getElementById("cart-total");
+const submitBtn = document.getElementById("submit-order");
+const toastEl = document.getElementById("toast");
+
 function showToast(message, isError = false) {
   toastEl.textContent = message;
   toastEl.className = "toast" + (isError ? " error" : "");
@@ -251,125 +261,3 @@ function updateTotal() {
         totalEl.textContent = `$${total.toFixed(2)}`;
     }
 }
-let menuItems = [];
-let cart = {}; 
-let activeCategory = "All";
-
-const menuListEl = document.getElementById("menu-list");
-const tabsEl = document.getElementById("category-tabs");
-const totalEl = document.getElementById("cart-total");
-const toastEl = document.getElementById("toast");
-const submitBtn = document.getElementById("submit-order");
-
-function showToast(message, isError = false) {
-    if (!toastEl) return;
-    toastEl.textContent = message;
-    toastEl.className = "toast" + (isError ? " error" : "");
-    toastEl.style.display = "block";
-    setTimeout(() => {
-        toastEl.style.display = "none";
-    }, 3000);
-}
-
-async function loadMenu() {
-    try {
-        const res = await fetch("/api/menu");
-        menuItems = await res.json();
-        renderCategoryTabs();
-        renderMenu();
-    } catch (err) {
-        if (menuListEl) {
-            menuListEl.innerHTML = "<p>Could not load the menu. Is the server running?</p>";
-        }
-        console.error(err);
-    }
-}
-
-function renderCategoryTabs() {
-    if (!tabsEl) return;
-    const categories = ["All", ...new Set(menuItems.map(i => i.category))];
-    tabsEl.innerHTML = categories
-        .map(
-            (cat) =>
-                `<button data-cat="${cat}" class="${cat === activeCategory ? "active" : ""}">${cat}</button>`
-        )
-        .join("");
-
-    tabsEl.querySelectorAll("button").forEach((btn) => {
-        btn.addEventListener("click", () => {
-            activeCategory = btn.dataset.cat;
-            renderCategoryTabs();
-            renderMenu();
-        });
-    });
-}
-
-function renderMenu() {
-    if (!menuListEl) return;
-    const filtered =
-        activeCategory === "All"
-            ? menuItems
-            : menuItems.filter((i) => i.category === activeCategory);
-
-    menuListEl.innerHTML = filtered
-        .map((item) => {
-            const qty = cart[item.id] || 0;
-            return `
-            <div class="item-row" data-category="${item.category}">
-                <img src="${item.image_url}" alt="${item.name}" />
-                <div class="item-info">
-                    <h3>${item.name}</h3>
-                    <p>${item.description || ""}</p>
-                    <div class="price">$${item.price.toFixed(2)}</div>
-                </div>
-                <div class="qty-control">
-                    <button onclick="changeQty(${item.id}, -1)">-</button>
-                    <span id="qty-${item.id}">${qty}</span>
-                    <button onclick="changeQty(${item.id}, 1)">+</button>
-                </div>
-            </div>
-            `;
-        })
-        .join("");
-}
-
-function changeQty(itemId, delta) {
-    if (!cart[itemId]) {
-        cart[itemId] = 0;
-    }
-    cart[itemId] += delta;
-    
-    if (cart[itemId] < 0) {
-        cart[itemId] = 0;
-    }
-    
-    const qtySpan = document.getElementById(`qty-${itemId}`);
-    if (qtySpan) {
-        qtySpan.textContent = cart[itemId];
-    }
-    
-    updateTotal();
-}
-
-function updateTotal() {
-    let total = 0;
-    let totalQty = 0;
-    for (const id in cart) {
-        const item = menuItems.find(i => i.id == id);
-        if (item) {
-            total += item.price * cart[id];
-            totalQty += cart[id];
-        }
-    }
-    if (totalEl) {
-        totalEl.textContent = `$${total.toFixed(2)}`;
-    }
-    if (submitBtn) {
-        submitBtn.style.display = totalQty > 0 ? "block" : "none";
-    }
-}
-
-// Page load thaye etle menu load karva mate
-loadMenu();
-
-    
