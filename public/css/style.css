@@ -333,3 +333,11 @@ footer {
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
     background: linear-gradient(135deg, #81583f, #5c412e);
 }
+.toast {
+    background-color: #333333 !important; /* ડાર્ક ગ્રે/બ્લેક બેકગ્રાઉન્ડ */
+    color: #ffffff !important;           /* સફેદ અક્ષરો જેથી એકદમ સ્પષ્ટ દેખાય */
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-size: 1rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
