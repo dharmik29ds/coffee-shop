@@ -104,6 +104,12 @@ async function submitOrder() {
   }));
 
   if (items.length === 0) return;
+  const tableNumber = document.getElementById("table-number").value.trim();
+    
+    if (!tableNumber) {
+        showToast("Tamare table number nakhavo anivary che!", true);
+        return;
+    }
 
   const payload = {
     table_number: document.getElementById("table-number").value.trim(),
