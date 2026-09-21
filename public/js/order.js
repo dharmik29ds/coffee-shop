@@ -230,6 +230,37 @@ if (placeOrderBtn) {
     });
 }
 loadMenu();
+function changeQty(itemId, delta) {
+    if (!cart[itemId]) {
+        cart[itemId] = 0;
+    }
+    cart[itemId] += delta;
+    
+    if (cart[itemId] < 0) {
+        cart[itemId] = 0;
+    }
+    
+    // UI માં ક્વોન્ટિટી અપડેટ કરો
+    const qtySpan = document.getElementById(`qty-${itemId}`);
+    if (qtySpan) {
+        qtySpan.textContent = cart[itemId];
+    }
+    
+    updateTotal();
+}
+
+function updateTotal() {
+    let total = 0;
+    for (const id in cart) {
+        const item = menuItems.find(i => i.id == id);
+        if (item) {
+            total += item.price * cart[id];
+        }
+    }
+    if (totalEl) {
+        totalEl.textContent = `$${total.toFixed(2)}`;
+    }
+}
 
 
     
