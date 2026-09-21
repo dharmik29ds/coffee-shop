@@ -107,7 +107,7 @@ async function submitOrder() {
   const tableNumber = document.getElementById("table-number").value.trim();
     
     if (!tableNumber) {
-        showToast("Tamare table number nakhavo enter table no & name!", true);
+        showToast("Tamare table number nakhavo enter table no & your name!", true);
         return;
     }
 
