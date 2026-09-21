@@ -9,7 +9,31 @@
 <body>
 
   <header class="navbar">
-    <div class="logo">Daybreak <span>Coffee Co.</span></div>
+    <div class="logo" style="display: flex; align-items: center; gap: 10px; font-weight: bold; font-size: 1.2rem; color: #fff; cursor: pointer;">
+    <!-- Sunkissed Coffee Cup & Sunrise Icon -->
+    <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Sunrise Glow Background -->
+        <circle cx="18" cy="18" r="16" fill="url(#sun-gradient)" opacity="0.25"/>
+        <!-- Sun Rays / Top Steam -->
+        <path d="M18 6V9M12 8L13.5 10.5M24 8L22.5 10.5" stroke="#FFA500" stroke-width="2" stroke-linecap="round"/>
+        <!-- Coffee Cup Body -->
+        <path d="M10 14H22V22C22 24.2091 20.2091 26 18 26C15.7909 26 14 24.2091 14 22V21H10V14Z" fill="url(#cup-gradient)"/>
+        <!-- Coffee Cup Handle -->
+        <path d="M22 16H24C25.1046 16 26 16.8954 26 18C26 19.1046 25.1046 20 24 20H22" stroke="#FFD700" stroke-width="2" stroke-linecap="round"/>
+        <!-- Gradient Definitions -->
+        <defs>
+            <linearGradient id="sun-gradient" x1="2" y1="2" x2="34" y2="34" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#FFD700"/>
+                <stop offset="1" stop-color="#FF8C00"/>
+            </linearGradient>
+            <linearGradient id="cup-gradient" x1="10" y1="14" x2="22" y2="26" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#FFD700"/>
+                <stop offset="1" stop-color="#FFA500"/>
+            </linearGradient>
+        </defs>
+    </svg>
+    <span>Daybreak <span style="color: #FFD700;">Coffee Co.</span></span>
+</div>
     <nav>
       <a href="#menu">Menu</a>
       <a href="#order">Order</a>
