@@ -229,7 +229,7 @@ if (placeOrderBtn) {
         openCartDrawer();
     });
 }
-
+loadMenu();
 
 
     
